@@ -21,3 +21,38 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}  # Automatically provided by GitHub
           publish_dir: ./  # Directory with your website files (e.g., HTML, CSS, JS)
           publish_branch: gh-pages  # The branch where your GitHub Pages site will live (usually `gh-pages`)
+
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment when changes are pushed to the main branch
+
+permissions:
+  contents: write  # Required to push changes to the repository
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Add the public repository as a remote (for deployment)
+      - name: Set up public repo as a remote
+        run: |
+          git remote add deploy https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/rahvad/Rahul-Vaddi-Space.git
+          git fetch deploy
+
+      # Step 3: Commit and push to the public repository's `gh-pages` branch
+      - name: Deploy to GitHub Pages
+        run: |
+          git checkout -b gh-pages  # Create a new branch or switch to `gh-pages`
+          cp -R ./dist/* ./  # Copy built files (adjust this if your build output is different)
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push deploy gh-pages --force  # Push to the `gh-pages` branch of the public repo
