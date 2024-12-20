@@ -3,44 +3,36 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger deployment when changes are pushed to the main branch
-
-permissions:
-  contents: write  # Required to push changes to the repository
+      - main  # Trigger deployment when code is pushed to the `main` branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code from the private repository
       - name: Checkout private repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          repository: rahvad/Rahul-Vaddi-Space  # Name of your private repo
-          token: ${{ secrets.GH_TOKEN }}  # Personal Access Token for authentication
+          repository: rahvad/Rahul-Vaddi-Space # Replace with your private repo name
+          token: ${{ secrets.GH_TOKEN }}  # GitHub's token for authentication
 
-      # Step 2: Set up the public repository as a remote for pushing the built content
-      - name: Set up public repo as a remote
+      - name: Checkout public repository
+        uses: actions/checkout@v3
+        with:
+          repository: rahvad.github.io  # Replace with your public repository's name
+          token: ${{ secrets.GH_TOKEN }}  # GitHub token for pushing to the public repo
+
+      - name: Copy files to the public repository
         run: |
-          git remote add deploy https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/rahvad/rahvad.github.io.git
-          git fetch deploy
+          # Remove all existing files in the public repository folder (gh-pages branch)
+          rm -rf *
 
-      # Step 3: Prepare and deploy files to the public repository's `gh-pages` branch
-      - name: Deploy to GitHub Pages
+          cp -r * .  # Copy all files and directories
+
+      - name: Commit and push changes
         run: |
-          # Ensure we're on a clean branch
-          git checkout --orphan gh-pages  # Create an orphan branch to start fresh
-          git reset --hard  # Remove all files from the index (we'll add the new ones)
-          
-          # Copy everything from the root directory to the current directory
-          cp -R ./ ./  # Copies all files from the root of your private repo to the root of the public repo
-
-
-          # Add the files to Git
+          git config user.name "rahvad"
+          git config user.email "rahvad@gmail.com"
           git add .
           git commit -m "Deploy to GitHub Pages"
-          
-          # Push the changes to the public repo's gh-pages branch
-          git push deploy gh-pages --force  # Force push to the gh-pages branch
-
+          git push origin main  # Push changes to the public repository
