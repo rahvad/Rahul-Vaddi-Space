@@ -107,13 +107,11 @@ b, strong {
   position: relative;
 }
 
+/* Updated for animated text */
 .animated-info {
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 5px;
-  min-width: 260px;
-  position: relative;
-  white-space: nowrap;
+  display: inline-flex; /* Ensure items are in a row */
+  align-items: center; /* Align text vertically in the center */
+  flex-wrap: wrap; /* Allow wrapping if necessary */
 }
 
 .animated-item {
@@ -122,46 +120,37 @@ b, strong {
 
 .animated-item {
   font-size: 38px;
-  line-height: inherit;
-  display: inline-block; /* Ensure each item stays in the same line */
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  animation: BottomTotop 6s linear infinite 0s;
-  margin-right: 10px; /* Optional, adds space between items */
+  color: #ffc200;
+  display: inline-block; /* Ensure the items are inline */
+  margin-right: 10px; /* Optional, adds spacing between items */
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 6s infinite;
+  position: relative; /* This allows the items to remain in their position */
 }
+
 .animated-item:nth-child(2n+2) {
   animation-delay: 2s;
 }
+
 .animated-item:nth-child(3n+3) {
   animation-delay: 4s;
 }
 
-@keyframes BottomTotop {
+@keyframes fadeIn {
   0% {
-    opacity: 0;
-  }
-  5% {
     opacity: 0;
     transform: translateY(5px);
   }
   10% {
     opacity: 1;
-    transform: translateY(0px);
-  }
-  25% {
-    opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
   }
   30% {
+    opacity: 1;
+  }
+  50% {
     opacity: 0;
     transform: translateY(5px);
-  }
-  80% {
-    opacity: 0;
   }
   100% {
     opacity: 0;
@@ -483,21 +472,40 @@ b, strong {
   }
 
   .about-image {
-    margin-top: 4em;
+    display: flex; /* Ensures the image is aligned properly within the container */
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically */
+    padding: 20px; /* Adds space around the image */
+    position: relative;
   }
 
-  /* Style the image with a border and additional effects */
-  .about-image img {
-    border: 5px solid #ddd; /* Change the border color as needed */
-    border-radius: 10px; /* Optional, for rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional, adds a shadow effect */
-    transition: all 0.3s ease; /* Optional, smooth transition for hover effects */
+  .framed-img {
+    width: 100%; /* Make image responsive */
+    max-width: 80%; /* Limit the max width */
+    height: auto; /* Maintain aspect ratio */
+    border: 10px solid #ffffff; /* Adds a white border around the image */
+    border-radius: 15px; /* Rounds the corners of the border */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds a soft shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  .framed-img:hover {
+    transform: scale(1.05); /* Slightly scale up the image on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
   }
 
-  .about-image img:hover {
-    transform: scale(1.05); /* Optional, enlarges the image slightly on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Optional, enhances shadow on hover */
+  /* Optional: For responsive design, adjust on smaller screens */
+@media (max-width: 991px) {
+  .framed-img {
+    max-width: 90%; /* Slightly increase max-width on smaller screens */
   }
+}
+
+@media (max-width: 767px) {
+  .framed-img {
+    max-width: 100%; /* Allow image to take full width on very small screens */
+  }
+}
 
   .mobile-mt-2,
   .contact-form {
