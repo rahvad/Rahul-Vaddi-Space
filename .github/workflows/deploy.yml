@@ -18,6 +18,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
+          github_token: ${{ secrets.GH_TOKEN }}  # Automatically provided by GitHub
           publish_dir: ./  # Directory with your website files (e.g., HTML, CSS, JS)
           publish_branch: gh-pages  # The branch where your GitHub Pages site will live (usually `gh-pages`)
