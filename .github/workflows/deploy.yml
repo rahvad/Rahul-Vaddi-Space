@@ -19,7 +19,7 @@ jobs:
       - name: Checkout public repository
         uses: actions/checkout@v3
         with:
-          repository: rahvad.github.io  # Replace with your public repository's name
+          repository: rahvad/rahvad.github.io  # Replace with your public repository's name
           token: ${{ secrets.GH_TOKEN }}  # GitHub token for pushing to the public repo
 
       - name: Copy files to the public repository
