@@ -10,29 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout private repository (source code)
       - name: Checkout private repository
         uses: actions/checkout@v3
         with:
-          repository: rahvad/Rahul-Vaddi-Space # Replace with your private repo name
+          repository: rahvad/Rahul-Vaddi-Space  # Replace with your private repo name
           token: ${{ secrets.GH_TOKEN }}  # GitHub's token for authentication
+          path: private-repo  # Checkout into a separate folder
 
+      # Step 2: Checkout public repository (GitHub Pages)
       - name: Checkout public repository
         uses: actions/checkout@v3
         with:
-          repository: rahvad/rahvad.github.io  # Replace with your public repository's name
+          repository: rahvad/rahvad.github.io  # Replace with your public repo name
           token: ${{ secrets.GH_TOKEN }}  # GitHub token for pushing to the public repo
+          path: public-repo  # Checkout into a separate folder
 
+      # Step 3: Copy files from the private repository to the public repository
       - name: Copy files to the public repository
         run: |
           # Remove all existing files in the public repository folder (gh-pages branch)
-          rm -rf *
+          rm -rf public-repo/*  # Clear the existing content in the public repo folder
 
-          cp -r * .  # Copy all files and directories
+          # Copy all files from the private repository (from private-repo folder)
+          cp -r private-repo/* public-repo/  # Copy the files from private repo to public repo
 
+      # Step 4: Commit and push changes to the public repository
       - name: Commit and push changes
         run: |
+          cd public-repo  # Change to the public repository folder
           git config user.name "rahvad"
           git config user.email "rahvad@gmail.com"
           git add .
           git commit -m "Deploy to GitHub Pages"
-          git push origin main  # Push changes to the public repository
+          git push origin main  # Push changes to the public repository (could be gh-pages branch)
