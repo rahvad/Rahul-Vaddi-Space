@@ -14,22 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js (if you're using a static site generator like Jekyll, Hugo, etc.)
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # You can change the version according to your needs
-
-      # Step 3: Install dependencies (if using npm or another package manager)
-      - name: Install dependencies
-        run: |
-          npm install  # If you're using npm, otherwise adjust according to your setup
-          npm run build  # This will build your website, modify if needed for your project
-
-      # Step 4: Deploy the website to the public repository
+      # Step 2: Deploy to GitHub Pages (no need for npm install if it's just static files)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
-          publish_dir: ./dist  # Path to the directory with your built website (e.g., after npm run build)
+          publish_dir: ./  # Directory with your website files (e.g., HTML, CSS, JS)
           publish_branch: gh-pages  # The branch where your GitHub Pages site will live (usually `gh-pages`)
