@@ -13,21 +13,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
-      - name: Checkout code
+      # Step 1: Checkout code from the private repository
+      - name: Checkout private repository
         uses: actions/checkout@v2
+        with:
+          repository: rahvad/Rahul-Vaddi-Space  # Name of your private repo
+          token: ${{ secrets.GH_TOKEN }}  # Personal Access Token for authentication
 
-      # Step 2: Add the public repository as a remote (for deployment)
+      # Step 2: Set up the public repository as a remote for pushing the built content
       - name: Set up public repo as a remote
         run: |
-          git remote add deploy https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/rahvad/Rahul-Vaddi-Space.git
+          git remote add deploy https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/rahvad/rahvad.github.io.git
           git fetch deploy
 
-      # Step 3: Commit and push to the public repository's `gh-pages` branch
+      # Step 3: Prepare and deploy files to the public repository's `gh-pages` branch
       - name: Deploy to GitHub Pages
         run: |
-          git checkout -b gh-pages  # Create a new branch or switch to `gh-pages`
-          cp -R ./dist/* ./  # Copy built files (adjust this if your build output is different)
+          # Ensure we're on a clean branch
+          git checkout --orphan gh-pages  # Create an orphan branch to start fresh
+          git reset --hard  # Remove all files from the index (we'll add the new ones)
+          
+          # Copy files from the private repo (e.g., if your static files are in 'public')
+          cp -R ./public/* ./  # Adjust this path if your built files are elsewhere in your private repo
+
+          # Add the files to Git
           git add .
           git commit -m "Deploy to GitHub Pages"
-          git push deploy gh-pages --force  # Push to the `gh-pages` branch of the public repo
+          
+          # Push the changes to the public repo's gh-pages branch
+          git push deploy gh-pages --force  # Force push to the gh-pages branch
+
