@@ -33,8 +33,9 @@ jobs:
           git checkout --orphan gh-pages  # Create an orphan branch to start fresh
           git reset --hard  # Remove all files from the index (we'll add the new ones)
           
-          # Copy files from the private repo (e.g., if your static files are in 'public')
-          cp -R ./public/* ./  # Adjust this path if your built files are elsewhere in your private repo
+          # Copy everything from the root directory to the current directory
+          cp -R ./ ./  # Copies all files from the root of your private repo to the root of the public repo
+
 
           # Add the files to Git
           git add .
