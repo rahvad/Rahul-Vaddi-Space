@@ -3,31 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger the deployment whenever changes are pushed to the main branch
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest  # The operating system for the runner
-
-    steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Step 2: Deploy to GitHub Pages (no need for npm install if it's just static files)
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}  # Automatically provided by GitHub
-          publish_dir: ./  # Directory with your website files (e.g., HTML, CSS, JS)
-          publish_branch: gh-pages  # The branch where your GitHub Pages site will live (usually `gh-pages`)
-
-
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches:
       - main  # Trigger deployment when changes are pushed to the main branch
 
 permissions:
