@@ -260,6 +260,19 @@ b, strong {
 .color-mode {
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.color-mode span {
+  margin-left: 8px;
+}
+
+@media (max-width: 767px) {
+  .color-mode {
+      font-size: 14px; /* You can adjust the size as needed */
+      margin-right: 10px; /* Add some spacing for mobile */
+  }
 }
 
 .color-mode-icon {
@@ -402,8 +415,39 @@ b, strong {
   background: #5b5b5b;
 }
 
+/* Ensures the images inside the carousel maintain the same size */
+.owl-carousel .item img {
+  width: 100%;                /* Makes the images responsive and fit their container */
+  height: 300px;              /* Set a fixed height for all images */
+  object-fit: cover;          /* Ensures the image covers the area without distortion */
+  border-radius: 10px;        /* Optional: Adds rounded corners for a smoother look */
+}
+
+/* Optional: Adjust the container's padding to ensure even spacing around the images */
+.project-info {
+  padding: 15px;
+  background-color: #f8f8f8;  /* Optional: Add a background color to the container */
+  border-radius: 10px;        /* Optional: Round the corners of the container */
+}
+
+
 .google-map iframe {
-  width: 100%;
+  width: 100%; /* Makes the iframe width responsive */
+  height: 100%; /* Makes the iframe height fill the container */
+  max-width: 100%; /* Ensures it doesn't overflow the container */
+  border-radius: 15px; /* Optional: Adds rounded corners for aesthetics */
+}
+
+@media (max-width: 991px) {
+  .google-map {
+      height: 350px; /* Set a fixed height on smaller screens */
+  }
+}
+
+@media (max-width: 767px) {
+  .google-map {
+      height: 300px; /* Further reduce height for very small screens */
+  }
 }
 
 .contact-form {
@@ -590,4 +634,32 @@ b, strong {
     display: inline-block;
     vertical-align: top;
   }
+}
+
+/* Style for the Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffc200; /* Button color */
+  border: none;
+  border-radius: 50%;
+  padding: 10px 15px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  background-color: #474559; /* Hover effect */
+}
+
+/* Show the button when scrolling down */
+.show {
+  opacity: 1;
+  visibility: visible;
 }
