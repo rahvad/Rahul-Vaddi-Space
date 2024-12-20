@@ -415,39 +415,70 @@ b, strong {
   background: #5b5b5b;
 }
 
-/* Ensures the images inside the carousel maintain the same size */
-.owl-carousel .item img {
-  width: 100%;                /* Makes the images responsive and fit their container */
-  height: 300px;              /* Set a fixed height for all images */
-  object-fit: cover;          /* Ensures the image covers the area without distortion */
-  border-radius: 10px;        /* Optional: Adds rounded corners for a smoother look */
+/* Outer container with fixed size */
+.owl-carousel .item .project-info {
+  width: 100%;                 /* Ensure full width within the carousel item */
+  max-width: 750px;            /* Fixed maximum width for the box */
+  height: 450px;               /* Fixed height for the outer box */
+  padding: 10px;               /* Padding inside the container */
+  background-color: #f8f8f8;   /* Optional background color */
+  border-radius: 5px;          /* Slightly rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Optional subtle shadow */
+  display: flex;
+  flex-direction: column;      /* Stack the image and description vertically */
+  justify-content: center;     /* Center the content vertically */
+  align-items: center;         /* Center the content horizontally */
+  text-align: center;          /* Ensure the text is centered */
+  margin: 0 auto;              /* Center the box horizontally within the carousel */
 }
 
-/* Optional: Adjust the container's padding to ensure even spacing around the images */
+/* Adjusting the image inside the carousel */
+.owl-carousel .item img {
+  width: 50%;                 /* Keeps the image responsive and fit within the container */
+  height: 200px;               /* Fixed height for the image */
+  object-fit: cover;           /* Ensures the image covers the area without distortion */
+  object-position: center;     /* Keep the image centered */
+  border-radius: 5px;          /* Subtle rounded corners for the image */
+  display: block;              /* Ensure it's a block element for correct alignment */
+  margin: 0 auto;              /* Horizontally center the image */
+}
+
+/* Reducing the size of the container box */
 .project-info {
-  padding: 15px;
-  background-color: #f8f8f8;  /* Optional: Add a background color to the container */
-  border-radius: 10px;        /* Optional: Round the corners of the container */
+  padding: 10px;              /* Reduced padding for a tighter layout around the image and text */
+  background-color: #f8f8f8;  /* Optional background color */
+  border-radius: 5px;         /* Keeps subtle rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+  height: auto;               /* Allow height to adjust automatically based on content */
+  display: flex;              /* Make the container a flexbox to better control layout */
+  flex-direction: column;     /* Align items vertically */
+  justify-content: center;    /* Centers content vertically within the box */
+  text-align: center;         /* Centers the text within the container */
+}
+
+/* Optional: Reduce the size of the description text */
+.project-description {
+  font-size: 14px;            /* Makes the text smaller to fit better */
+  line-height: 1.4;           /* Adjusts the line height for readability */
+  margin-top: 10px;           /* Adds a bit of space between the image and the text */
+  color: #333;                /* Optional text color */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .owl-carousel .item img {
+    width: 90%;               /* On smaller screens, let the image take up more space */
+    height: 200px;            /* Ensure height remains fixed */
+  }
+
+  .project-info {
+    padding: 5px;             /* Tighter padding on smaller screens */
+  }
 }
 
 
 .google-map iframe {
-  width: 100%; /* Makes the iframe width responsive */
-  height: 100%; /* Makes the iframe height fill the container */
-  max-width: 100%; /* Ensures it doesn't overflow the container */
-  border-radius: 15px; /* Optional: Adds rounded corners for aesthetics */
-}
-
-@media (max-width: 991px) {
-  .google-map {
-      height: 350px; /* Set a fixed height on smaller screens */
-  }
-}
-
-@media (max-width: 767px) {
-  .google-map {
-      height: 300px; /* Further reduce height for very small screens */
-  }
+  width: 100%;
 }
 
 .contact-form {
@@ -636,30 +667,139 @@ b, strong {
   }
 }
 
-/* Style for the Back to Top Button */
-.back-to-top {
+.project-description {
+  font-size: 16px;
+  color: #474559;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+/* Style for the scroll-to-top button */
+.scrollup {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #ffc200; /* Button color */
-  border: none;
-  border-radius: 50%;
-  padding: 10px 15px;
-  font-size: 20px;
-  color: white;
+  bottom: 20px; /* Position the button at the bottom */
+  right: 20px;  /* Position the button to the right */
+  background-color: #474559; /* Button color */
+  color: #fff; /* Arrow color, white by default */
+  border-radius: 50%; /* Circular shape */
+  padding: 20px; /* Slightly increase padding for larger button */
+  font-size: 20px; /* Slightly increase font size for larger arrow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease;
   cursor: pointer;
-  opacity: 0; /* Initially hidden */
-  visibility: hidden; /* Initially hidden */
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 1000;
+  z-index: 1000; /* Ensure it stays on top */
+  opacity: 0;  /* Initially hidden */
+  pointer-events: none; /* Button can't be clicked before it's shown */
 }
 
-.back-to-top:hover {
-  background-color: #474559; /* Hover effect */
+.scrollup.show {
+  opacity: 1; /* Make button visible */
+  pointer-events: auto; /* Enable click event */
+  transform: translateY(0); /* Normal position */
 }
 
-/* Show the button when scrolling down */
-.show {
-  opacity: 1;
-  visibility: visible;
+/* Hover effect to darken button color */
+.scrollup:hover {
+  background-color: #474559; /* Darker color on hover */
+}
+
+/* Active effect for button click */
+.scrollup:active {
+  transform: scale(0.95); /* Slightly shrink the button when clicked */
+}
+
+/* Optional: Change the color of the arrow icon */
+.scrollup i {
+  color: #fff; /* Color of the arrow icon (white by default) */
+}
+
+/* Optional: Change the color of the arrow icon on hover */
+.scrollup:hover i {
+  color: #fff; /* Gold color for the arrow when hovered */
+}
+
+/* Mobile-Specific Adjustments (max-width: 767px) */
+@media (max-width: 767px) {
+  .navbar-collapse {
+    background: #ffffff;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  .navbar-expand-sm .navbar-nav .nav-link {
+    padding: 3px 20px;
+  }
+
+  .scrollup {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  h1 {
+    font-size: 2.4em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  .animated-item {
+    font-size: 28px;
+  }
+
+  .framed-img {
+    max-width: 100%;
+  }
+
+  .project-description {
+    font-size: 14px;
+  }
+
+  .mobile-mt-2 {
+    margin-top: 2em;
+  }
+
+  .contact-info {
+    padding: 0 2rem;
+  }
+}
+
+/* Tablet and Small Desktop (max-width: 991px) */
+@media (max-width: 991px) {
+  .framed-img {
+    max-width: 90%;
+  }
+
+  .mobile-block {
+    display: block;
+  }
+
+  .contact-info {
+    flex-direction: column;
+  }
+
+  .social-links li {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+/* Very Small Screens (max-width: 320px) */
+@media (max-width: 320px) {
+  .full-screen {
+    padding: 4rem 0;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+
+  .contact-info {
+    flex-direction: column;
+  }
+
+  .social-links li {
+    display: inline-block;
+    vertical-align: top;
+  }
 }
