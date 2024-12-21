@@ -63,30 +63,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Install dependencies (optional if you are using a build tool)
-      # Uncomment if you need to build the project before deploying.
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16'
+      # Step 2: Create the /docs folder
+      - name: Create docs directory
+        run: mkdir -p docs
 
-      # Step 3: Build your project (skip if you are just using raw files)
-      # Uncomment if you need to build the project before deploying.
-      # - name: Build the project
-      #   run: npm run build
-
-      # Step 4: Copy files to /docs folder (adjust for your setup)
+      # Step 3: Move files into the /docs folder
       - name: Copy files to /docs folder
         run: |
-          mkdir -p docs
-          cp -r * docs/
-          # Ensure index.html is copied correctly
-          cp index.html docs/
+          cp -r index.html docs/
+          cp -r * docs/  # This will copy everything except the 'docs' directory itself
 
-      # Step 5: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
+      # Step 4: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: docs  # Specify the directory to deploy (adjust based on your project structure)
-
