@@ -681,8 +681,8 @@ b, strong {
   right: 20px;  /* Position the button to the right */
   background-color: #474559; /* Button color */
   color: #fff; /* Arrow color, white by default */
-  border-radius: 50%; /* Circular shape */
-  padding: 20px; /* Slightly increase padding for larger button */
+  border-radius: 10px; /* Rounded corners for a square button */
+  padding: 15px 20px; /* Adjust padding for more rectangular shape */
   font-size: 20px; /* Slightly increase font size for larger arrow */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease;
@@ -801,5 +801,110 @@ b, strong {
   .social-links li {
     display: inline-block;
     vertical-align: top;
+  }
+}
+
+/* Define the necessary CSS variables */
+:root {
+  /* --primary-bg-color: #f5f5f5;
+  --primary-text-color: #333;
+  --primary-card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --card-hover-bg: #e0e0e0; */
+  --progress-bar-bg: #e0e0e0;
+  --progress-bar-color: #4caf50; /* Green color for progress bar */
+  --font-family: 'Arial', sans-serif;
+}
+
+/* General styles for the skills section */
+.skills-section {
+  padding: 50px 0;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  font-family: var(--font-family);
+}
+
+.skills-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.skills-list-container {
+  padding: 10px 0;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.skill {
+  background-color: var(--primary-card-bg);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--shadow-color);
+  text-align: center;
+  padding: 20px;
+  width: calc(25% - 30px);
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background-color: var(--card-hover-bg);
+}
+
+.skill img {
+  width: 80px; /* Ensuring all images are the same width */
+  height: 80px; /* Fixing the height of the images */
+  object-fit: contain; /* Make sure images fit without distorting */
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.skill:hover img {
+  transform: scale(1.1);
+}
+
+.skill-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-text-color);
+  margin-bottom: 15px;
+}
+
+.skill-bar {
+  width: 100%;
+  background-color: var(--progress-bar-bg);
+  border-radius: 25px;
+  overflow: hidden;
+  height: 12px; /* Adjusted height */
+  margin-top: 10px;
+}
+
+.skill-bar span {
+  display: block;
+  height: 100%;
+  background: var(--progress-bar-color); /* Using the defined color */
+  border-radius: 25px;
+  transition: width 0.5s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .skills-heading {
+    font-size: 2rem;
+  }
+
+  .skills-list {
+    gap: 20px;
+  }
+
+  .skill {
+    width: calc(50% - 20px);
   }
 }
