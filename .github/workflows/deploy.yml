@@ -46,39 +46,39 @@
 #           git push origin main  # Push changes to the public repository (could be gh-pages branch)
 
 
-name: Deploy to GitHub Pages
+# name: Deploy to GitHub Pages
 
-on:
-  push:
-    branches:
-      - main  # Deploy from 'main' branch
+# on:
+#   push:
+#     branches:
+#       - main  # Deploy from 'main' branch
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#         with:
+#           token: ${{ secrets.GH_TOKEN }}
 
-      # Optional: Uncomment if you need a build step
-      # - name: Setup Node.js (if needed)
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16'
+#       # Optional: Uncomment if you need a build step
+#       # - name: Setup Node.js (if needed)
+#       #   uses: actions/setup-node@v3
+#       #   with:
+#       #     node-version: '16'
 
-      # - name: Install dependencies (if using npm)
-      #   run: |
-      #     npm install
+#       # - name: Install dependencies (if using npm)
+#       #   run: |
+#       #     npm install
 
-      # - name: Build project (if applicable)
-      #   run: |
-      #     npm run build  # Modify this if you have a build step
+#       # - name: Build project (if applicable)
+#       #   run: |
+#       #     npm run build  # Modify this if you have a build step
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./  # Deploy from the root directory
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GH_TOKEN }}
+#           publish_dir: ./  # Deploy from the root directory
