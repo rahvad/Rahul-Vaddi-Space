@@ -48,50 +48,36 @@
 
 name: Deploy to GitHub Pages
 
-# Trigger deployment on a push to the 'main' branch
 on:
   push:
     branches:
-      - main
+      - main  # Or any other branch you want to deploy from
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}  # Use GitHub's token to clone private repo
 
-      # Step 2: Build or prepare your static files here (if applicable)
-      # If you have a build process, run it here.
-      # Example:
-      # - name: Build project
+      # - name: Setup Node.js (if needed for your project)
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16'  # Specify the Node.js version if needed
+
+      # - name: Install dependencies
       #   run: |
-      #     npm install
-      #     npm run build
-      #     cp -r dist/* .  # Copy built files to the root directory
+      #     npm install  # Use this if your project uses Node.js/npm
 
-      # Step 3: Debug - List files in the root directory before deployment
-      - name: List files before deployment
-        run: ls -R
+      # - name: Build project (if needed)
+      #   run: |
+      #     npm run build  # Modify this if your project needs to be built
 
-      # Step 4: Disable Jekyll (add .nojekyll file to the root)
-      - name: Disable Jekyll
-        run: touch .nojekyll
-
-      # Step 5: Fetch git history to ensure git context is available
-      - name: Fetch git history
-        run: git fetch --prune --unshallow
-
-      # Step 6: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./  # Deploy everything in the root of the repository
-          publish_branch: gh-pages  # Deploy to the gh-pages branch
-
-      # Step 7: Debug - Verify if files are deployed
-      - name: Verify deployment on gh-pages
-        run: git log --oneline --decorate -n 5
+          publish_dir: ./root  # Path to the build directory (e.g., dist, build, or root)
