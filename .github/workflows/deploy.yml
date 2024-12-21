@@ -51,7 +51,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Or any other branch you want to deploy from
+      - main  # Deploy from the 'main' branch
 
 jobs:
   deploy:
@@ -63,6 +63,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}  # Use GitHub's token to clone private repo
 
+      # Optional: Uncomment and use if your project needs a build process
       # - name: Setup Node.js (if needed for your project)
       #   uses: actions/setup-node@v3
       #   with:
@@ -79,5 +80,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./root  # Path to the build directory (e.g., dist, build, or root)
+          github_token: ${{ secrets.GH_TOKEN }}  # Token to push to the gh-pages branch
+          publish_dir: ./  # The folder to deploy; root of the repo in this case
