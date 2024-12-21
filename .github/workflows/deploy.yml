@@ -64,24 +64,30 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 2: Build or prepare your static files here (if applicable)
-      # If you have any build steps, run them here.
-      # For example, if you have a build process to generate static files, do it now.
-    # Example of a build process step (if needed)
-    # - name: Build project
-    #   run: |
-    #     # For example, run build commands (e.g., npm run build or other steps)
-    #     npm install
-    #     npm run build
-    #     cp -r dist/* .  # Copy built files to the root directory
+      # If you have a build process, run it here.
+      # Example:
+      # - name: Build project
+      #   run: |
+      #     npm install
+      #     npm run build
+      #     cp -r dist/* .  # Copy built files to the root directory
 
-      # Step 3: Disable Jekyll (add .nojekyll file to the root)
+      # Step 3: Debug - List files in the root directory before deployment
+      - name: List files before deployment
+        run: ls -R
+
+      # Step 4: Disable Jekyll (add .nojekyll file to the root)
       - name: Disable Jekyll
         run: touch .nojekyll
 
-      # Step 4: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
+      # Step 5: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./  # Deploy everything in the root of the repository (no /docs)
+          publish_dir: ./  # Deploy everything in the root of the repository
           publish_branch: gh-pages  # Deploy to the gh-pages branch
+
+      # Step 6: Debug - Verify if files are deployed
+      - name: Verify deployment on gh-pages
+        run: git log --oneline --decorate -n 5
