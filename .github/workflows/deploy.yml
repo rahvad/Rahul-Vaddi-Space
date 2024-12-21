@@ -48,7 +48,6 @@
 
 name: Deploy to GitHub Pages
 
-# Trigger deployment on a push to the 'main' branch
 on:
   push:
     branches:
@@ -63,10 +62,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
+      # Step 2: Increase Git buffer size to handle large files
+      - name: Increase Git buffer size
+        run: git config --global http.postBuffer 524288000  # 500MB
+
+      # Step 3: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: /  # Use the root directory ("/")
-          publish_branch: gh-pages  # Specify the gh-pages branch
+          publish_dir: /
+          publish_branch: gh-pages
+          user_name: 'GitHub Actions'
+          user_email: 'actions@github.com'
+          commit_message: 'Deploy to GitHub Pages'
