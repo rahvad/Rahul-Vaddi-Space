@@ -63,15 +63,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Create the /docs folder
+      # Step 2: Create the /docs directory
       - name: Create docs directory
         run: mkdir -p docs
 
-      # Step 3: Move files into the /docs folder
+      # Step 3: Copy files into the /docs folder, excluding the 'docs' folder itself
       - name: Copy files to /docs folder
         run: |
-          cp -r index.html docs/
-          cp -r * docs/  # This will copy everything except the 'docs' directory itself
+          # Use rsync to copy everything except the 'docs' folder itself
+          rsync -av --exclude='docs' ./ docs/
 
       # Step 4: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
@@ -79,3 +79,4 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: docs  # Specify the directory to deploy (adjust based on your project structure)
+
