@@ -63,25 +63,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Create the /docs directory
-      - name: Create docs directory
-        run: mkdir -p docs
+      # Step 2: Build or prepare your static files here (if applicable)
+      # If you have any build steps, run them here.
+      # For example, if you have a build process to generate static files, do it now.
+    # Example of a build process step (if needed)
+    # - name: Build project
+    #   run: |
+    #     # For example, run build commands (e.g., npm run build or other steps)
+    #     npm install
+    #     npm run build
+    #     cp -r dist/* .  # Copy built files to the root directory
 
-      # Step 3: Copy files into the /docs folder, excluding the 'docs' folder itself
-      - name: Copy files to /docs folder
-        run: |
-          # Use rsync to copy everything except the 'docs' folder itself
-          rsync -av --exclude='docs' ./ docs/
-
-      # Step 4: Disable Jekyll (add .nojekyll file to the /docs folder)
+      # Step 3: Disable Jekyll (add .nojekyll file to the root)
       - name: Disable Jekyll
-        run: touch docs/.nojekyll
+        run: touch .nojekyll
 
-      # Step 5: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
+      # Step 4: Deploy to GitHub Pages using 'peaceiris/actions-gh-pages'
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: docs  # Specify the directory to deploy (adjust based on your project structure)
-
-
+          publish_dir: ./  # Deploy everything in the root of the repository (no /docs)
+          publish_branch: gh-pages  # Deploy to the gh-pages branch
