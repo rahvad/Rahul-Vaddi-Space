@@ -844,7 +844,8 @@ b, strong {
 .skills-section {
   padding: 50px 0;
   background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
+  /* color: var(--primary-text-color); */
+  color: #474559;
   font-family: var(--font-family);
 }
 
